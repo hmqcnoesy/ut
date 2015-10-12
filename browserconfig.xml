@@ -1,1 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><browserconfig><msapplication><tile><square70x70logo src="browserconfig/tiny.png"/><square150x150logo src="browserconfig/square.png"/><wide310x150logo src="browserconfig/wide.png"/><square310x310logo src="browserconfig/large.png"/><TileColor>#204060</TileColor></tile></msapplication></browserconfig>
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="img/tiny.png"/>
+      <square150x150logo src="img/square.png"/>
+      <wide310x150logo src="img/wide.png"/>
+      <square310x310logo src="img/large.png"/>
+      <TileColor>#204060</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
