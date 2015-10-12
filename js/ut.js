@@ -19,6 +19,12 @@ function loadChapter(lang1, lang2, book, chapterNumber) {
 
 
 function removeChapter() {
+	document.getElementById('h1Title').innerHTML = '';
+	document.getElementById('h2Title').innerHTML = '';
+
+	document.getElementById('divSectionHeading').innerHTML = '';
+	document.getElementById('divChapterHeading').innerHTML = '';
+
 	var divVerses = document.getElementById('divVerses');
 	if (divVerses && divVerses.firstChild) {
 		divVerses.removeChild(divVerses.firstChild);
@@ -27,6 +33,8 @@ function removeChapter() {
 
 
 function displayChapter(chapterLang1, chapterLang2) {
+	displayChapterHeader(chapterLang1, chapterLang2);
+		
 	var container = document.createElement('div');
 	container.setAttribute('id', 'divContainer');
 	
@@ -66,6 +74,34 @@ function displayChapter(chapterLang1, chapterLang2) {
 		container.appendChild(rowDiv);
 	}
 	document.getElementById('divVerses').appendChild(container);
+	document.getElementById('btnNextBottom').innerHTML = chapterLang1.nextTitle;	
 }
 
-loadChapter('rus', 'spa', '1-ne', 1);
+
+function displayChapterHeader(chapterLang1, chapterLang2) {
+	
+	document.getElementById('h1Title').innerHTML = chapterLang1.chapterTitle;
+	document.getElementById('h2Title').innerHTML = chapterLang2.chapterTitle;
+	
+	var sectionHeading = document.getElementById('divSectionHeading');
+	var sectionLang1 = document.createElement('div')
+	sectionLang1.classList.add('lang1');
+	if (chapterLang1.sectionHeading) sectionLang1.appendChild(document.createTextNode(chapterLang1.sectionHeading));
+	var sectionLang2 = document.createElement('div')
+	sectionLang2.classList.add('lang2');
+	if (chapterLang2.sectionHeading) sectionLang2.appendChild(document.createTextNode(chapterLang2.sectionHeading));
+	sectionHeading.appendChild(sectionLang1);
+	sectionHeading.appendChild(sectionLang2);
+	
+	var chapterHeading = document.getElementById('divChapterHeading');
+	var headingLang1 = document.createElement('div')
+	headingLang1.classList.add('lang1');
+	if (chapterLang1.heading) headingLang1.appendChild(document.createTextNode(chapterLang1.heading));
+	var headingLang2 = document.createElement('div')
+	headingLang2.classList.add('lang2');
+	if (chapterLang2.heading) headingLang2.appendChild(document.createTextNode(chapterLang2.heading));
+	chapterHeading.appendChild(headingLang1);
+	chapterHeading.appendChild(headingLang2);
+}
+
+loadChapter('rus', 'eng', '1-ne', 1);

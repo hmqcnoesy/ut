@@ -8,6 +8,7 @@ html {
 	background-color: #204060;
 	padding: 0.5em;
 }
+
 body {
 	background-color: white;
 	padding: 0.5em;
@@ -16,9 +17,52 @@ body {
 	margin-right: auto;
 }
 
+#divHeader {
+	margin: auto;
+	text-align: center;
+}
+
+#divHeader a {
+	display: inline-block;
+}
+
+#divTitle {
+	display: inline-block;
+} 
+
+h1, h2 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+	margin-bottom: 0.2em;
+}
+
+h2 {
+	color: #bbb;
+	margin-top: 0.2em;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	color: #bbb;
+}
+
+#divSectionHeading {
+	font-style: italic;
+}
+
+#divChapterHeading {
+	font-style: italic;
+	font-weight: bold;
+}
+
+
 .row {
 	margin: 0.5em 0;
 	padding: 0.5em;
+	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .row:nth-child(2n+1) {
@@ -46,7 +90,4 @@ body {
 	border-radius: 20%;
 	padding: 0.3em;
 	padding-right: 1em;
-}
-.verseText {
-	font-family: Georgia, 'Times New Roman', Times, serif;
 }
