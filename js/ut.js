@@ -1,3 +1,33 @@
+function getSelectedLanguages() {
+	var languages ={};
+	if (localStorage.lang1) {
+		languages.lang1 = localStorage.lang1;
+	} else {
+		languages.lang1 = 'eng';
+	}
+	if (localStorage.lang2) {
+		languages.lang2 = localStorage.lang2;
+	} else {
+		languages.lang2 = 'eng';
+	}
+	return languages;
+}
+
+
+function setupButtonClicks() {
+	var buttons = document.getElementsByTagName('button');
+	
+	for (var i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener('click', function() {
+			var languages = getSelectedLanguages();
+			var book = this.getAttribute('data-book');
+			var no = this.getAttribute('data-no');
+			loadChapter(languages.lang1, languages.lang2, book, no);
+		});
+	}
+}
+
+
 function loadChapter(lang1, lang2, book, chapterNumber) {
 	var ajaxCallsComplete = 0;
 	
@@ -33,6 +63,7 @@ function removeChapter() {
 
 
 function displayChapter(chapterLang1, chapterLang2) {
+	setupNavigationButtons(chapterLang1, chapterLang2);
 	displayChapterHeader(chapterLang1, chapterLang2);
 		
 	var container = document.createElement('div');
@@ -74,7 +105,22 @@ function displayChapter(chapterLang1, chapterLang2) {
 		container.appendChild(rowDiv);
 	}
 	document.getElementById('divVerses').appendChild(container);
-	document.getElementById('btnNextBottom').innerHTML = chapterLang1.nextTitle;	
+}
+
+
+function setupNavigationButtons(chapterLang1, chapterLang2) {
+	var btnPrev = document.getElementById('btnPrev');
+	btnPrev.setAttribute('data-book', chapterLang1.prevAbbr);
+	btnPrev.setAttribute('data-no', chapterLang1.prevNo);
+	
+	var btnNext =document.getElementById('btnNext');
+	btnNext.setAttribute('data-book', chapterLang1.nextAbbr);
+	btnNext.setAttribute('data-no', chapterLang1.nextNo);
+	
+	var btnNextBottom = document.getElementById('btnNextBottom');
+	btnNextBottom.innerHTML = chapterLang1.nextTitle + ' &gt;&gt;';	
+	btnNextBottom.setAttribute('data-book', chapterLang1.nextAbbr);
+	btnNextBottom.setAttribute('data-no', chapterLang1.nextNo);
 }
 
 
@@ -104,4 +150,5 @@ function displayChapterHeader(chapterLang1, chapterLang2) {
 	chapterHeading.appendChild(headingLang2);
 }
 
+setupButtonClicks();
 loadChapter('rus', 'eng', '1-ne', 1);
