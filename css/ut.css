@@ -125,6 +125,10 @@ button {
 	cursor: pointer;
 }
 
+.dialog-close > a:hover {
+	color: black;
+}
+
 .dialog-content {
 	overflow-y: auto;
 	padding: 0.5em 2em;

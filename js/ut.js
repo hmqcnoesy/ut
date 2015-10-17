@@ -179,7 +179,10 @@ function setupDialogs() {
 	var dialogs = document.querySelectorAll('.dialog');
 	for (var i = 0; i < dialogs.length; i++) {
 		dialogs[i].querySelector('.dialog-close>a').addEventListener('click', function() {
-			this.parentNode.parentNode.style.display = null;
+			console.log(this);
+			console.log(this.parentNode.parentNode.style.display);
+			this.parentNode.parentNode.style.display = '';
+			console.log(this.parentNode.parentNode.style.display);
 		});
 	}
 }
