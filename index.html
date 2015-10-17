@@ -26,6 +26,29 @@
         <div id="divVerses"></div>
         
         <div id="divBottom"><button id="btnNextBottom"></button></div>
+        <a data-dialog-target="divNav">Click to open Nav</a>
+        <a data-dialog-target="divSettings">Click to open Settings</a>
+        <a data-dialog-target="divHistory">Click to open History</a>
+        <!--todo:
+            language/navigation dialog
+            settings dialog
+            history dialog
+            eliminate flashing
+            honor isHeader and hideNumber properties of verses in json files
+        -->
+        
+        <div class="dialog" id="divNav">
+            <div class="dialog-close"><a>X</a></div>
+            <div class="dialog-content">Nav stuff</div>
+        </div>
+        <div class="dialog" id="divSettings">
+            <div class="dialog-close"><a>X</a></div>
+            <div class="dialog-content">settings</div>
+        </div>
+        <div class="dialog" id="divHistory">
+            <div class="dialog-close"><a>X</a></div>
+            <div class="dialog-content">history</div>
+        </div>
         
 		<script src="js/ut.js"></script>
     </body>

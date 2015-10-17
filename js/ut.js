@@ -1,16 +1,23 @@
-function getSelectedLanguages() {
-	var languages ={};
-	if (localStorage.lang1) {
-		languages.lang1 = localStorage.lang1;
-	} else {
-		languages.lang1 = 'eng';
-	}
-	if (localStorage.lang2) {
-		languages.lang2 = localStorage.lang2;
-	} else {
-		languages.lang2 = 'eng';
-	}
-	return languages;
+function getSavedInfo() {
+	if (localStorage.savedInfo) return JSON.parse(localStorage.savedInfo);
+	
+	return {
+		lang1: 'eng',
+		lang2: 'eng',
+		book: 'bofm-title',
+		chapterNo: 1
+	};
+}
+
+
+function setSavedInfo(infoToSave) {
+	var savedInfo = localStorage.savedInfo || '{}';
+	savedInfo = JSON.parse(savedInfo);
+	if (infoToSave.lang1) savedInfo.lang1 = infoToSave.lang1;
+	if (infoToSave.lang2) savedInfo.lang2 = infoToSave.lang2;
+	if (infoToSave.book) savedInfo.book = infoToSave.book;
+	if (infoToSave.chapterNo) savedInfo.chapterNo = infoToSave.chapterNo;
+	localStorage.savedInfo = JSON.stringify(savedInfo);
 }
 
 
@@ -19,31 +26,39 @@ function setupButtonClicks() {
 	
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
-			var languages = getSelectedLanguages();
+			var savedInfo = getSavedInfo();
 			var book = this.getAttribute('data-book');
 			var no = this.getAttribute('data-no');
-			loadChapter(languages.lang1, languages.lang2, book, no);
+			loadChapter(savedInfo.lang1, savedInfo.lang2, book, no);
 		});
 	}
 }
 
 
-function loadChapter(lang1, lang2, book, chapterNumber) {
+function loadChapter(lang1, lang2, book, chapterNo) {
 	var ajaxCallsComplete = 0;
 	
 	removeChapter();
 	var xhr1 = new XMLHttpRequest();
 	xhr1.onreadystatechange = function() { if (xhr1.readyState == 4 && xhr1.status == 200) ajaxCallComplete(); };
-	xhr1.open('GET', 'data/' + lang1 + '/' + book + '/' + chapterNumber + '.json');
+	xhr1.open('GET', 'data/' + lang1 + '/' + book + '/' + chapterNo + '.json');
 	xhr1.send();
 	var xhr2 = new XMLHttpRequest();
 	xhr2.onreadystatechange = function() { if (xhr2.readyState == 4 && xhr2.status == 200) ajaxCallComplete(); };
-	xhr2.open('GET', 'data/' + lang2 + '/' + book + '/' + chapterNumber + '.json');
+	xhr2.open('GET', 'data/' + lang2 + '/' + book + '/' + chapterNo + '.json');
 	xhr2.send();
 	
 	function ajaxCallComplete() {
 		ajaxCallsComplete++;
-		if (ajaxCallsComplete == 2) displayChapter(JSON.parse(xhr1.response), JSON.parse(xhr2.response));
+		if (ajaxCallsComplete == 2) {
+			displayChapter(JSON.parse(xhr1.response), JSON.parse(xhr2.response));
+			setSavedInfo({
+				lang1: lang1,
+				lang2: lang2,
+				book: book,
+				chapterNo: chapterNo
+			});
+		}
 	}
 }
 
@@ -150,5 +165,28 @@ function displayChapterHeader(chapterLang1, chapterLang2) {
 	chapterHeading.appendChild(headingLang2);
 }
 
+
+function setupDialogs() {
+	var toggleLinks = document.querySelectorAll('[data-dialog-target]');
+	for (var i = 0; i < toggleLinks.length; i++) {
+		toggleLinks[i].addEventListener('click', function() {
+			var dialogId = this.getAttribute('data-dialog-target');
+			var dialog = document.querySelector('#' + dialogId);
+			if (dialog) dialog.style.display = 'block';
+		});
+	}
+	
+	var dialogs = document.querySelectorAll('.dialog');
+	for (var i = 0; i < dialogs.length; i++) {
+		dialogs[i].querySelector('.dialog-close>a').addEventListener('click', function() {
+			this.parentNode.parentNode.style.display = null;
+		});
+	}
+}
+
+
+setupDialogs();
+
+var savedInfo = getSavedInfo();
+loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 setupButtonClicks();
-loadChapter('rus', 'eng', '1-ne', 1);
