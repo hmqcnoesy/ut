@@ -109,9 +109,11 @@ function displayChapter(chapterLang1, chapterLang2) {
 		lang1Text = document.createElement('span');
 		lang1Text.classList.add('verseText');
 		lang1Text.appendChild(document.createTextNode(chapterLang1.verses[i].txt));
-		lang2Text = document.createElement('span');
-		lang2Text.classList.add('verseText');
-		lang2Text.appendChild(document.createTextNode(chapterLang2.verses[i].txt));
+		if (chapterLang2.verses[i] && chapterLang2.verses[i].txt) {
+			lang2Text = document.createElement('span');
+			lang2Text.classList.add('verseText');
+			lang2Text.appendChild(document.createTextNode(chapterLang2.verses[i].txt));
+		}
 		
 		lang1Div.appendChild(lang1Text);
 		lang2Div.appendChild(lang2Text);
