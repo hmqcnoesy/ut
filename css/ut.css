@@ -18,6 +18,70 @@ body {
 	margin-right: auto;
 }
 
+#hamburger {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  font-size: 0;
+  text-indent: -9999px;
+  transition: background 0.3s;
+  background-color: #204060;
+}
+
+#hamburger:focus {
+  outline: none;
+}
+
+#hamburger span {
+  display: block;
+  position: absolute;
+  top: 22px;
+  left: 9px;
+  right: 9px;
+  height: 4px;
+  background: white;
+  transition: transform 0.3s;
+}
+
+#hamburger span::before,
+#hamburger span::after {
+  position: absolute;
+  display: block;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #fff;
+  content: "";
+}
+
+#hamburger span::before {
+  top: -10px;
+}
+
+#hamburger span::after {
+  bottom: -10px;
+}
+
+#hamburger.is-active span {
+  transform: rotate(90deg);
+}
+
+#divSettings {
+	text-align: center;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 1s;
+}
+
+#divSettings.is-active {
+	max-height: 300px;
+	transition: max-height 1s;
+}
+
 #divHeader {
 	margin: auto;
 	text-align: center;

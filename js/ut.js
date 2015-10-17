@@ -1,3 +1,5 @@
+'use strict';
+
 function getSavedInfo() {
 	if (localStorage.savedInfo) return JSON.parse(localStorage.savedInfo);
 	
@@ -22,8 +24,7 @@ function setSavedInfo(infoToSave) {
 
 
 function setupButtonClicks() {
-	var buttons = document.getElementsByTagName('button');
-	
+	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
 			var savedInfo = getSavedInfo();
@@ -201,7 +202,23 @@ function syncLanguageSettingsWithSavedInfo(savedInfo) {
 	});
 }
 
+
+function setupHamburger() {
+	document.getElementById("hamburger").addEventListener('click', function(e) {
+		e.preventDefault();
+		if (this.classList.contains('is-active') === true) {
+			this.classList.remove('is-active');
+			document.getElementById('divSettings').classList.remove('is-active');
+		} else {
+			this.classList.add('is-active');
+			document.getElementById('divSettings').classList.add('is-active');
+		}
+	});
+}
+
+
 var savedInfo = getSavedInfo();
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 setupButtonClicks();
 syncLanguageSettingsWithSavedInfo(savedInfo);
+setupHamburger();
