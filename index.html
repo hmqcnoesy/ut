@@ -5,11 +5,101 @@
         <title>UT</title>
         <meta name="description" content="U&amp;T">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-        <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="img/favicon-196x196.png" sizes="196x196" />
+        <link rel="icon" type="image/png" href="img/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16" />
+        <link rel="icon" type="image/png" href="img/favicon-128.png" sizes="128x128" />
+        <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
         <link rel="stylesheet" href="css/ut.css">
     </head>
     <body>
+        <div id="divSettings">
+            <div class="row">
+                <div class="lang1">
+                    <select id="selLang1">
+                        <option></option>
+                        <option value="ceb">Cebuano</option>
+                        <option value="ces">Česky</option>
+                        <option value="dan">Dansk</option>
+                        <option value="deu">Deutsch</option>
+                        <option value="eng">English</option>
+                        <option value="est">Eesti</option>
+                        <option value="fin">Suomi</option>
+                        <option value="fra">Français</option>
+                        <option value="hat">Kreyòl Ayisyen</option>
+                        <option value="hun">Magyar</option>
+                        <option value="ilo">Ilokano</option>
+                        <option value="ind">Bahasa Indonesia</option>
+                        <option value="isl">Íslenska</option>
+                        <option value="ita">Italiano</option>
+                        <option value="jpn">日本語</option>
+                        <option value="kor">한국어</option>
+                        <option value="lao">ພາສາລາວ</option>
+                        <option value="mlg">Malagasy</option>
+                        <option value="mon">Монгол</option>
+                        <option value="nld">Nederlands</option>
+                        <option value="nor">Norsk</option>
+                        <option value="por">Português</option>
+                        <option value="ron">Română</option>
+                        <option value="rus">Русский</option>
+                        <option value="smo">Gagana Samoa</option>
+                        <option value="spa">Español</option>
+                        <option value="sqi">Shqip</option>
+                        <option value="swe">Svenska</option>
+                        <option value="tgl">Tagalog</option>
+                        <option value="ton">Faka-tonga</option>
+                        <option value="ukr">Українська</option>
+                        <option value="vie">Tiếng Việt</option>
+                        <option value="zho">中文</option>
+                    </select>
+                </div>
+                <div class="lang2">
+                    <select id="selLang2">
+                        <option></option>
+                        <option value="ceb">Cebuano</option>
+                        <option value="ces">Česky</option>
+                        <option value="dan">Dansk</option>
+                        <option value="deu">Deutsch</option>
+                        <option value="eng">English</option>
+                        <option value="est">Eesti</option>
+                        <option value="fin">Suomi</option>
+                        <option value="fra">Français</option>
+                        <option value="hat">Kreyòl Ayisyen</option>
+                        <option value="hun">Magyar</option>
+                        <option value="ilo">Ilokano</option>
+                        <option value="ind">Bahasa Indonesia</option>
+                        <option value="isl">Íslenska</option>
+                        <option value="ita">Italiano</option>
+                        <option value="jpn">日本語</option>
+                        <option value="kor">한국어</option>
+                        <option value="lao">ພາສາລາວ</option>
+                        <option value="mlg">Malagasy</option>
+                        <option value="mon">Монгол</option>
+                        <option value="nld">Nederlands</option>
+                        <option value="nor">Norsk</option>
+                        <option value="por">Português</option>
+                        <option value="ron">Română</option>
+                        <option value="rus">Русский</option>
+                        <option value="smo">Gagana Samoa</option>
+                        <option value="spa">Español</option>
+                        <option value="sqi">Shqip</option>
+                        <option value="swe">Svenska</option>
+                        <option value="tgl">Tagalog</option>
+                        <option value="ton">Faka-tonga</option>
+                        <option value="ukr">Українська</option>
+                        <option value="vie">Tiếng Việt</option>
+                        <option value="zho">中文</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div id="divHeader">
             <button id="btnPrev">&lt;&lt;</button>
             <div id="divTitle">
@@ -26,30 +116,7 @@
         <div id="divVerses"></div>
         
         <div id="divBottom"><button id="btnNextBottom"></button></div>
-        <a data-dialog-target="divNav">Click to open Nav</a>
-        <a data-dialog-target="divSettings">Click to open Settings</a>
-        <a data-dialog-target="divHistory">Click to open History</a>
-        <!--todo:
-            language/navigation dialog
-            settings dialog
-            history dialog
-            eliminate flashing
-            honor isHeader and hideNumber properties of verses in json files
-        -->
-        
-        <div class="dialog" id="divNav">
-            <div class="dialog-close"><a>X</a></div>
-            <div class="dialog-content">Nav stuff</div>
-        </div>
-        <div class="dialog" id="divSettings">
-            <div class="dialog-close"><a>X</a></div>
-            <div class="dialog-content">settings</div>
-        </div>
-        <div class="dialog" id="divHistory">
-            <div class="dialog-close"><a>X</a></div>
-            <div class="dialog-content">history</div>
-        </div>
-        
+
 		<script src="js/ut.js"></script>
     </body>
 </html>

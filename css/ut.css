@@ -7,6 +7,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 html {
 	background-color: #204060;
 	padding: 0.5em;
+	padding-bottom: 1.5em;
 }
 
 body {
@@ -74,14 +75,13 @@ button {
 	padding-right: 1em;
 	box-sizing: border-box;
 	display: inline-block;
-	*display: inline;
 	zoom: 1;
 	letter-spacing: normal;
 	word-spacing: normal;
 	vertical-align: top;
 	text-rendering: auto;
 	width: 50%;
-	*width: 49.9690%;
+	margin: -1px; /*hack to prevent wrapping of inline-block elements because of whitespace between tags */
 }
 
 .verseNo {
@@ -94,42 +94,4 @@ button {
 
 #divBottom {
 	text-align: right;
-}
-
-.dialog {
-	position: fixed;
-	margin: auto;
-	z-index: 99;
-	top: 10%;
-	right: 10%;
-	bottom: 10%;
-	left: 10%;
-	padding: 0;
-	background-color: white;
-	box-shadow: 0px 0px 5em 1em #000;
-	display: none;
-}
-
-.dialog-close {
-	margin: 0;
-	padding: 0;
-	padding-right: 1em;
-	text-align: right;
-}
-
-.dialog-close > a {
-	padding: 0.1em 1.2em;
-	background-color: darkred;
-	color: white;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.dialog-close > a:hover {
-	background-color: red;
-}
-
-.dialog-content {
-	overflow-y: auto;
-	padding: 0.5em 2em;
 }

@@ -95,15 +95,16 @@ function displayChapter(chapterLang1, chapterLang2) {
 		lang2Div = document.createElement('div');
 		lang2Div.classList.add('lang2');
 		
-		lang1VerseNo = document.createElement('span');
-		lang1VerseNo.classList.add('verseNo');
-		lang1VerseNo.appendChild(document.createTextNode(chapterLang1.verses[i].vNo));
-		lang2VerseNo = document.createElement('span');
-		lang2VerseNo.classList.add('verseNo');
-		lang2VerseNo.appendChild(document.createTextNode(chapterLang2.verses[i].vNo));
-		
-		lang1Div.appendChild(lang1VerseNo);
-		lang2Div.appendChild(lang2VerseNo);
+		if (!chapterLang1.verses[i].hideNumber) {
+			lang1VerseNo = document.createElement('span');
+			lang1VerseNo.classList.add('verseNo');
+			lang1VerseNo.appendChild(document.createTextNode(chapterLang1.verses[i].vNo));
+			lang2VerseNo = document.createElement('span');
+			lang2VerseNo.classList.add('verseNo');
+			lang2VerseNo.appendChild(document.createTextNode(chapterLang2.verses[i].vNo));
+			lang1Div.appendChild(lang1VerseNo);
+			lang2Div.appendChild(lang2VerseNo);
+		}
 		
 		lang1Text = document.createElement('span');
 		lang1Text.classList.add('verseText');
@@ -133,7 +134,7 @@ function setupNavigationButtons(chapterLang1, chapterLang2) {
 	btnNext.setAttribute('data-no', chapterLang1.nextNo);
 	
 	var btnNextBottom = document.getElementById('btnNextBottom');
-	btnNextBottom.innerHTML = chapterLang1.nextTitle + ' &gt;&gt;';	
+	btnNextBottom.innerHTML = (chapterLang1.nextTitle || '') + ' &gt;&gt;';	
 	btnNextBottom.setAttribute('data-book', chapterLang1.nextAbbr);
 	btnNextBottom.setAttribute('data-no', chapterLang1.nextNo);
 }
@@ -145,48 +146,60 @@ function displayChapterHeader(chapterLang1, chapterLang2) {
 	document.getElementById('h2Title').innerHTML = chapterLang2.chapterTitle;
 	
 	var sectionHeading = document.getElementById('divSectionHeading');
-	var sectionLang1 = document.createElement('div')
-	sectionLang1.classList.add('lang1');
-	if (chapterLang1.sectionHeading) sectionLang1.appendChild(document.createTextNode(chapterLang1.sectionHeading));
-	var sectionLang2 = document.createElement('div')
-	sectionLang2.classList.add('lang2');
-	if (chapterLang2.sectionHeading) sectionLang2.appendChild(document.createTextNode(chapterLang2.sectionHeading));
-	sectionHeading.appendChild(sectionLang1);
-	sectionHeading.appendChild(sectionLang2);
+	if (chapterLang1.sectionHeading || chapterLang2.sectionHeading) {
+		sectionHeading.style.display = '';
+		var sectionLang1 = document.createElement('div')
+		sectionLang1.classList.add('lang1');
+		if (chapterLang1.sectionHeading) sectionLang1.appendChild(document.createTextNode(chapterLang1.sectionHeading));
+		var sectionLang2 = document.createElement('div')
+		sectionLang2.classList.add('lang2');
+		if (chapterLang2.sectionHeading) sectionLang2.appendChild(document.createTextNode(chapterLang2.sectionHeading));
+		sectionHeading.appendChild(sectionLang1);
+		sectionHeading.appendChild(sectionLang2);
+	} else {
+		sectionHeading.style.display = 'none';
+	}
 	
 	var chapterHeading = document.getElementById('divChapterHeading');
-	var headingLang1 = document.createElement('div')
-	headingLang1.classList.add('lang1');
-	if (chapterLang1.heading) headingLang1.appendChild(document.createTextNode(chapterLang1.heading));
-	var headingLang2 = document.createElement('div')
-	headingLang2.classList.add('lang2');
-	if (chapterLang2.heading) headingLang2.appendChild(document.createTextNode(chapterLang2.heading));
-	chapterHeading.appendChild(headingLang1);
-	chapterHeading.appendChild(headingLang2);
+	if (chapterLang1.heading || chapterLang2.heading) {
+		chapterHeading.style.display = '';
+		var headingLang1 = document.createElement('div')
+		headingLang1.classList.add('lang1');
+		if (chapterLang1.heading) headingLang1.appendChild(document.createTextNode(chapterLang1.heading));
+		var headingLang2 = document.createElement('div')
+		headingLang2.classList.add('lang2');
+		if (chapterLang2.heading) headingLang2.appendChild(document.createTextNode(chapterLang2.heading));
+		chapterHeading.appendChild(headingLang1);
+		chapterHeading.appendChild(headingLang2);
+	} else {
+		chapterHeading.style.display = 'none';
+	}
 }
 
 
-function setupDialogs() {
-	var toggleLinks = document.querySelectorAll('[data-dialog-target]');
-	for (var i = 0; i < toggleLinks.length; i++) {
-		toggleLinks[i].addEventListener('click', function() {
-			var dialogId = this.getAttribute('data-dialog-target');
-			var dialog = document.querySelector('#' + dialogId);
-			if (dialog) dialog.style.display = 'block';
-		});
+function syncLanguageSettingsWithSavedInfo(savedInfo) {
+	if (savedInfo && savedInfo.lang1) {
+		document.getElementById('selLang1').value = savedInfo.lang1;
 	}
 	
-	var dialogs = document.querySelectorAll('.dialog');
-	for (var i = 0; i < dialogs.length; i++) {
-		dialogs[i].querySelector('.dialog-close>a').addEventListener('click', function() {
-			this.parentNode.parentNode.style.display = '';
-		});
+	if (savedInfo && savedInfo.lang2) {
+		document.getElementById('selLang2').value =  savedInfo.lang2;
 	}
+	
+	document.getElementById('selLang1').addEventListener('change', function() {
+		setSavedInfo({ lang1: this.value });
+		var newSavedInfo = getSavedInfo();
+		loadChapter(newSavedInfo.lang1, newSavedInfo.lang2, newSavedInfo.book, newSavedInfo.chapterNo);
+	});
+	
+	document.getElementById('selLang2').addEventListener('change', function() {
+		setSavedInfo({ lang2: this.value });
+		var newSavedInfo = getSavedInfo();
+		loadChapter(newSavedInfo.lang1, newSavedInfo.lang2, newSavedInfo.book, newSavedInfo.chapterNo);
+	});
 }
-
-
-setupDialogs();
 
 var savedInfo = getSavedInfo();
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 setupButtonClicks();
+syncLanguageSettingsWithSavedInfo(savedInfo);
