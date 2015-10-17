@@ -126,7 +126,7 @@ button {
 }
 
 .dialog-close > a:hover {
-	color: black;
+	background-color: red;
 }
 
 .dialog-content {
