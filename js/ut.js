@@ -23,19 +23,6 @@ function setSavedInfo(infoToSave) {
 }
 
 
-function setupButtonClicks() {
-	var buttons = document.querySelectorAll('button.nav');
-	for (var i = 0; i < buttons.length; i++) {
-		buttons[i].addEventListener('click', function() {
-			var savedInfo = getSavedInfo();
-			var book = this.getAttribute('data-book');
-			var no = this.getAttribute('data-no');
-			loadChapter(savedInfo.lang1, savedInfo.lang2, book, no);
-		});
-	}
-}
-
-
 function loadChapter(lang1, lang2, book, chapterNo) {
 	var ajaxCallsComplete = 0;
 	
@@ -180,10 +167,7 @@ function displayChapterHeader(chapterLang1, chapterLang2) {
 }
 
 
-function syncSettingsWithSavedInfo(savedInfo) {
-	document.getElementById('selLang1').addEventListener('change', updateSelBookLanguage);
-	document.getElementById('selBook').addEventListener('change', updateDisplayedChapterNos);
-	
+function syncSettingsWithSavedInfo(savedInfo) {	
 	if (savedInfo && savedInfo.lang1) {
 		document.getElementById('selLang1').value = savedInfo.lang1;
 	}
@@ -202,13 +186,23 @@ function syncSettingsWithSavedInfo(savedInfo) {
 }
 
 
-function updateSelBookLanguage() {
+function updateSelectedLanguages() {
 	var selLang1 = document.getElementById('selLang1');
-	var books = selLang1.options[selLang1.selectedIndex].getAttribute('data-books').split(',');
-	var selBook = document.getElementById('selBook');
-	for (var i = 0; i < books.length; i++) {
-		selBook.options[i].innerHTML = books[i];
+	if (selLang1.value) {
+		setSavedInfo({lang1: selLang1.value});
+		var books = selLang1.options[selLang1.selectedIndex].getAttribute('data-books').split(',');
+		var selBook = document.getElementById('selBook');
+		for (var i = 0; i < books.length; i++) {
+			selBook.options[i].innerHTML = books[i];
+		}
 	}
+	
+	var selLang2 = document.getElementById('selLang2');
+	if (selLang2.value) {
+		setSavedInfo({lang2: selLang2.value});
+	}
+	
+	updateBtnNavigateText();
 }
 
 
@@ -254,11 +248,30 @@ function updateBtnNavigateText() {
 }
 
 
+function handleEvents() {
+	document.getElementById('selLang1').addEventListener('change', updateSelectedLanguages);
+	document.getElementById('selLang2').addEventListener('change', updateSelectedLanguages);
+	document.getElementById('selBook').addEventListener('change', updateDisplayedChapterNos);
+	document.getElementById('selBook').addEventListener('change', updateBtnNavigateText);
+	document.getElementById('tblChapterNo').addEventListener('click', updateBtnNavigateText);
+	
+	var buttons = document.querySelectorAll('button.nav');
+	for (var i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener('click', function() {
+			var savedInfo = getSavedInfo();
+			var book = this.getAttribute('data-book');
+			var no = this.getAttribute('data-no');
+			loadChapter(savedInfo.lang1, savedInfo.lang2, book, no);
+		});
+	}
+}
+
+
 var savedInfo = getSavedInfo();
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
-setupButtonClicks();
+handleEvents();
 setupHamburger();
 syncSettingsWithSavedInfo(savedInfo);
-updateSelBookLanguage();
+updateSelectedLanguages();
 updateDisplayedChapterNos();
 updateBtnNavigateText();
