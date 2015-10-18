@@ -19,6 +19,7 @@ body {
 }
 
 #hamburger {
+  background-color: #204060;
   display: block;
   position: relative;
   overflow: hidden;
@@ -28,8 +29,6 @@ body {
   height: 48px;
   font-size: 0;
   text-indent: -9999px;
-  transition: background 0.3s;
-  background-color: #204060;
 }
 
 #hamburger:focus {
@@ -44,7 +43,7 @@ body {
   right: 9px;
   height: 4px;
   background: white;
-  transition: transform 0.3s;
+  transition: transform 0.25s;
 }
 
 #hamburger span::before,
@@ -74,12 +73,12 @@ body {
 	text-align: center;
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 1s;
+	transition: max-height 0.25s;
 }
 
 #divSettings.is-active {
 	max-height: 300px;
-	transition: max-height 1s;
+	transition: max-height 0.25s;
 }
 
 #divHeader {

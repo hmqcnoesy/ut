@@ -192,6 +192,11 @@ function syncLanguageSettingsWithSavedInfo(savedInfo) {
 	document.getElementById('selLang1').addEventListener('change', function() {
 		setSavedInfo({ lang1: this.value });
 		var newSavedInfo = getSavedInfo();
+		var books = this.options[this.selectedIndex].getAttribute('data-books').split(',');
+		var selBook = document.getElementById('selBook');
+		for (var i = 0; i < books.length; i++) {
+			selBook.options[i].innerHTML = books[i];
+		}
 		loadChapter(newSavedInfo.lang1, newSavedInfo.lang2, newSavedInfo.book, newSavedInfo.chapterNo);
 	});
 	
@@ -207,11 +212,32 @@ function setupHamburger() {
 	document.getElementById("hamburger").addEventListener('click', function(e) {
 		e.preventDefault();
 		if (this.classList.contains('is-active') === true) {
-			this.classList.remove('is-active');
 			document.getElementById('divSettings').classList.remove('is-active');
+			this.classList.remove('is-active');
 		} else {
 			this.classList.add('is-active');
 			document.getElementById('divSettings').classList.add('is-active');
+		}
+	});
+}
+
+
+function setupSelChapterNo() {
+	document.getElementById('selBook').addEventListener('change', function() {
+		var chapterCount = parseInt(this.options[this.selectedIndex].getAttribute('data-chapters'));
+		var selChapterNo = document.getElementById('selChapterNo');
+		var diff = selChapterNo.options.length - chapterCount;
+		if (diff > 0) {
+			for (var i = selChapterNo.options.length; i > chapterCount; i--) {
+				selChapterNo.removeChild(selChapterNo.options[i-1]);
+			}	
+		} else if (diff < 0) {
+			for (var i = 1 + selChapterNo.options.length; i <= chapterCount; i++) {
+				var option = document.createElement('option');
+				option.setAttribute('value', i.toString());
+				option.appendChild(document.createTextNode(i.toString()));
+				selChapterNo.appendChild(option);
+			}
 		}
 	});
 }
@@ -222,3 +248,4 @@ loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterN
 setupButtonClicks();
 syncLanguageSettingsWithSavedInfo(savedInfo);
 setupHamburger();
+setupSelChapterNo();
