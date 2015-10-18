@@ -211,11 +211,14 @@ function updateDisplayedChapterNos() {
 	var chapterCount = parseInt(selBook.options[selBook.selectedIndex].getAttribute('data-chapters'));
 	var chapterNoButtons = document.querySelectorAll('#tblChapterNo input[type=radio]');
 	for (var i = 0; i < chapterNoButtons.length; i++) {
-		var makeVisible = (i < chapterCount);
-		chapterNoButtons[i].nextSibling.style.visibility = makeVisible ? 'visible' : 'hidden';
+		if (i < chapterCount) {
+			chapterNoButtons[i].parentNode.removeAttribute('style');
+		} else {
+			chapterNoButtons[i].parentNode.style.display = 'none';
+		}
 	}
 	
-	if (document.querySelector('#tblChapterNo input[type=radio]:checked + label').style.visibility === 'hidden') {
+	if (document.querySelector('#tblChapterNo input[type=radio]:checked + label').parentNode.style.display === 'none') {
 		document.getElementById('rb1').checked = true;
 	}
 }
@@ -225,11 +228,11 @@ function setupHamburger() {
 	document.getElementById("hamburger").addEventListener('click', function(e) {
 		e.preventDefault();
 		if (this.classList.contains('is-active') === true) {
-			document.getElementById('divSettings').classList.remove('is-active');
+			document.getElementById('divNav').classList.remove('is-active');
 			this.classList.remove('is-active');
 		} else {
 			this.classList.add('is-active');
-			document.getElementById('divSettings').classList.add('is-active');
+			document.getElementById('divNav').classList.add('is-active');
 		}
 	});
 }

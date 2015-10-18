@@ -20,9 +20,12 @@ body {
 	margin-right: auto;
 }
 
+header {
+	background-color: #204060;
+}
+
 #hamburger {
   background-color: #204060;
-  display: block;
   position: relative;
   overflow: hidden;
   margin: 0;
@@ -31,6 +34,7 @@ body {
   height: 48px;
   font-size: 0;
   text-indent: -9999px;
+  float: right;
 }
 
 #hamburger:focus {
@@ -71,24 +75,24 @@ body {
   transform: rotate(90deg);
 }
 
-#divSettings {
+#divNav {
 	text-align: center;
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.35s;
 }
 
-#divSettings.is-active {
+#divNav.is-active {
 	max-height: 500px;
 	transition: max-height 0.35s;
 }
 
-#divSettings select {
+#divNav select {
 	max-width: 100%;
 }
 
-#divSettings div, 
-#divSettings table {
+#divNav div, 
+#divNav table {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
@@ -186,6 +190,7 @@ button {
 	text-rendering: auto;
 	width: 50%;
 	margin: -1px; /*hack to prevent wrapping of inline-block elements because of whitespace between tags */
+	overflow-x: auto;
 }
 
 .verseNo {
