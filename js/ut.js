@@ -180,7 +180,10 @@ function displayChapterHeader(chapterLang1, chapterLang2) {
 }
 
 
-function syncLanguageSettingsWithSavedInfo(savedInfo) {
+function syncSettingsWithSavedInfo(savedInfo) {
+	document.getElementById('selLang1').addEventListener('change', updateSelBookLanguage);
+	document.getElementById('selBook').addEventListener('change', updateDisplayedChapterNos);
+	
 	if (savedInfo && savedInfo.lang1) {
 		document.getElementById('selLang1').value = savedInfo.lang1;
 	}
@@ -189,22 +192,38 @@ function syncLanguageSettingsWithSavedInfo(savedInfo) {
 		document.getElementById('selLang2').value =  savedInfo.lang2;
 	}
 	
-	document.getElementById('selLang1').addEventListener('change', function() {
-		setSavedInfo({ lang1: this.value });
-		var newSavedInfo = getSavedInfo();
-		var books = this.options[this.selectedIndex].getAttribute('data-books').split(',');
-		var selBook = document.getElementById('selBook');
-		for (var i = 0; i < books.length; i++) {
-			selBook.options[i].innerHTML = books[i];
-		}
-		loadChapter(newSavedInfo.lang1, newSavedInfo.lang2, newSavedInfo.book, newSavedInfo.chapterNo);
-	});
+	if (savedInfo && savedInfo.book) {
+		document.getElementById('selBook').value = savedInfo.book;
+	}
 	
-	document.getElementById('selLang2').addEventListener('change', function() {
-		setSavedInfo({ lang2: this.value });
-		var newSavedInfo = getSavedInfo();
-		loadChapter(newSavedInfo.lang1, newSavedInfo.lang2, newSavedInfo.book, newSavedInfo.chapterNo);
-	});
+	if (savedInfo && savedInfo.chapterNo) {
+		document.getElementById('rb' + savedInfo.chapterNo).checked = true;
+	}
+}
+
+
+function updateSelBookLanguage() {
+	var selLang1 = document.getElementById('selLang1');
+	var books = selLang1.options[selLang1.selectedIndex].getAttribute('data-books').split(',');
+	var selBook = document.getElementById('selBook');
+	for (var i = 0; i < books.length; i++) {
+		selBook.options[i].innerHTML = books[i];
+	}
+}
+
+
+function updateDisplayedChapterNos() {
+	var selBook = document.getElementById('selBook');
+	var chapterCount = parseInt(selBook.options[selBook.selectedIndex].getAttribute('data-chapters'));
+	var chapterNoButtons = document.querySelectorAll('#tblChapterNo input[type=radio]');
+	for (var i = 0; i < chapterNoButtons.length; i++) {
+		var makeVisible = (i < chapterCount);
+		chapterNoButtons[i].nextSibling.style.visibility = makeVisible ? 'visible' : 'hidden';
+	}
+	
+	if (document.querySelector('#tblChapterNo input[type=radio]:checked + label').style.visibility === 'hidden') {
+		document.getElementById('rb1').checked = true;
+	}
 }
 
 
@@ -222,30 +241,24 @@ function setupHamburger() {
 }
 
 
-function setupSelChapterNo() {
-	document.getElementById('selBook').addEventListener('change', function() {
-		var chapterCount = parseInt(this.options[this.selectedIndex].getAttribute('data-chapters'));
-		var selChapterNo = document.getElementById('selChapterNo');
-		var diff = selChapterNo.options.length - chapterCount;
-		if (diff > 0) {
-			for (var i = selChapterNo.options.length; i > chapterCount; i--) {
-				selChapterNo.removeChild(selChapterNo.options[i-1]);
-			}	
-		} else if (diff < 0) {
-			for (var i = 1 + selChapterNo.options.length; i <= chapterCount; i++) {
-				var option = document.createElement('option');
-				option.setAttribute('value', i.toString());
-				option.appendChild(document.createTextNode(i.toString()));
-				selChapterNo.appendChild(option);
-			}
-		}
-	});
+function updateBtnNavigateText() {
+	var book = document.querySelector('#selBook option:checked');
+	var chapterNo = document.querySelector('#tblChapterNo input[type=radio]:checked');
+	
+	if (!book || !chapterNo) return;
+	
+	var btn = document.getElementById('btnNavigate');
+	btn.setAttribute('data-book', book.value);
+	btn.setAttribute('data-no', chapterNo.value);
+	btn.innerHTML = book.innerHTML + ' ' + chapterNo.value + ' &gt;&gt;';
 }
 
 
 var savedInfo = getSavedInfo();
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 setupButtonClicks();
-syncLanguageSettingsWithSavedInfo(savedInfo);
 setupHamburger();
-setupSelChapterNo();
+syncSettingsWithSavedInfo(savedInfo);
+updateSelBookLanguage();
+updateDisplayedChapterNos();
+updateBtnNavigateText();

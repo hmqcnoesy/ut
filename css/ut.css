@@ -43,7 +43,7 @@ body {
   right: 9px;
   height: 4px;
   background: white;
-  transition: transform 0.25s;
+  transition: transform 0.35s;
 }
 
 #hamburger span::before,
@@ -73,13 +73,51 @@ body {
 	text-align: center;
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 0.25s;
+	transition: max-height 0.35s;
 }
 
 #divSettings.is-active {
-	max-height: 300px;
-	transition: max-height 0.25s;
+	max-height: 500px;
+	transition: max-height 0.35s;
 }
+
+#divSettings select {
+	max-width: 100%;
+}
+
+#divSettings div, 
+#divSettings table {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#tblChapterNo {
+	width: 100%;
+	font-size: 80%;
+}
+
+#tblChapterNo td {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+
+#tblChapterNo input[type=radio] {
+	display: none;
+}
+
+#tblChapterNo input[type=radio]+label {
+	border: 4px solid transparent;
+	padding: 0.1em;
+	border-radius: 50%;
+	outline: none;
+}
+
+#tblChapterNo input[type=radio]:checked+label {
+	border: 4px solid #204060;
+	outline: none;
+}
+
 
 #divHeader {
 	margin: auto;
