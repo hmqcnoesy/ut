@@ -40,12 +40,14 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 		ajaxCallsComplete++;
 		if (ajaxCallsComplete == 2) {
 			displayChapter(JSON.parse(xhr1.response), JSON.parse(xhr2.response));
-			setSavedInfo({
+			var infoToSave = {
 				lang1: lang1,
 				lang2: lang2,
 				book: book,
 				chapterNo: chapterNo
-			});
+			};
+			setSavedInfo(infoToSave);
+			syncSettingsWithSavedInfo(infoToSave);
 		}
 	}
 }
