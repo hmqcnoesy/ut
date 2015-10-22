@@ -26,7 +26,6 @@ function setSavedInfo(infoToSave) {
 function loadChapter(lang1, lang2, book, chapterNo) {
 	var ajaxCallsComplete = 0;
 	
-	removeChapter();
 	var xhr1 = new XMLHttpRequest();
 	xhr1.onreadystatechange = function() { if (xhr1.readyState == 4 && xhr1.status == 200) ajaxCallComplete(); };
 	xhr1.open('GET', 'data/' + lang1 + '/' + book + '/' + chapterNo + '.json');
@@ -39,6 +38,7 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 	function ajaxCallComplete() {
 		ajaxCallsComplete++;
 		if (ajaxCallsComplete == 2) {
+			removeChapter();
 			displayChapter(JSON.parse(xhr1.response), JSON.parse(xhr2.response));
 			var infoToSave = {
 				lang1: lang1,
@@ -48,14 +48,15 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 			};
 			setSavedInfo(infoToSave);
 			syncSettingsWithSavedInfo(infoToSave);
+			updateBtnNavigateText();
 		}
 	}
 }
 
 
 function removeChapter() {
-	document.getElementById('h1Title').innerHTML = '';
-	document.getElementById('h2Title').innerHTML = '';
+	//document.getElementById('h1Title').innerHTML = '';
+	//document.getElementById('h2Title').innerHTML = '';
 
 	document.getElementById('divSectionHeading').innerHTML = '';
 	document.getElementById('divChapterHeading').innerHTML = '';
