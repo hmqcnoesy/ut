@@ -24,6 +24,8 @@ function setSavedInfo(infoToSave) {
 
 
 function loadChapter(lang1, lang2, book, chapterNo) {
+	document.getElementById('divHeader').classList.add('fade');
+	
 	var ajaxCallsComplete = 0;
 	
 	var xhr1 = new XMLHttpRequest();
@@ -49,6 +51,7 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 			setSavedInfo(infoToSave);
 			syncSettingsWithSavedInfo(infoToSave);
 			updateBtnNavigateText();
+			document.getElementById('divHeader').classList.remove('fade');
 		}
 	}
 }
@@ -134,7 +137,7 @@ function setupNavigationButtons(chapterLang1, chapterLang2) {
 
 
 function displayChapterHeader(chapterLang1, chapterLang2) {
-	
+	document.getElementById('divHeader').classList.remove('fade');
 	document.getElementById('h1Title').innerHTML = chapterLang1.chapterTitle;
 	document.getElementById('h2Title').innerHTML = chapterLang2.chapterTitle;
 	
