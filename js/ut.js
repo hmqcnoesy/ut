@@ -50,8 +50,15 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 			syncSettingsWithSavedInfo(infoToSave);
 			updateBtnNavigateText();
 			updateDisplayedChapterNos();
+			deactivateNavButtons();
 		}
 	}
+}
+
+
+function deactivateNavButtons() {
+	document.getElementById('btnPrev').classList.remove('active');
+	document.getElementById('btnNext').classList.remove('active');	
 }
 
 
@@ -261,6 +268,7 @@ function handleEvents() {
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
+			this.classList.add('active');
 			var savedInfo = getSavedInfo();
 			var book = this.getAttribute('data-book');
 			var no = this.getAttribute('data-no');

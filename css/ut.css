@@ -4,6 +4,10 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 
 /* U and T */
 
+:focus {
+	outline: none;
+}
+
 html {
 	background-color: #204060;
 	padding: 0.5em;
@@ -96,11 +100,20 @@ header {
 #btnPrev,
 #btnNext {
 	width: 10%;
+	padding: 0;
+	margin: 0;
 }
 
-#btnPrev svg,
-#btnNext svg {
-	fill: #204060;
+#btnPrev:not(.active) svg,
+#btnNext:not(.active) svg {
+	fill: rgba(32, 64, 96, 1);
+	transition: fill 1s;
+}
+
+#btnPrev.active svg,
+#btnNext.active svg {
+	fill: rgba(248, 248, 248, 1);
+	transition: fill 0.2s;
 }
 
 #btnPrev {
