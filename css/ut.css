@@ -106,13 +106,13 @@ header {
 
 #btnPrev:not(.active) svg,
 #btnNext:not(.active) svg {
-	fill: rgba(32, 64, 96, 1);
+	fill: #204060;
 	transition: fill 1s;
 }
 
 #btnPrev.active svg,
 #btnNext.active svg {
-	fill: rgba(248, 248, 248, 1);
+	fill: #f8f8f8;
 	transition: fill 0.2s;
 }
 
