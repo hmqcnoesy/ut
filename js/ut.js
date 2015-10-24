@@ -273,6 +273,7 @@ function handleEvents() {
 			var book = this.getAttribute('data-book');
 			var no = this.getAttribute('data-no');
 			loadChapter(savedInfo.lang1, savedInfo.lang2, book, no);
+			if (this.id === 'btnNextBottom') window.scrollTo(0, 0);
 		});
 	}
 }
