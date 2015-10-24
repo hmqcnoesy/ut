@@ -59,16 +59,6 @@ header {
 	margin-bottom: 1em;
 }
 
-#divHeader {
-	opacity: 1;
-	transition: opacity 0.75s;
-}
-
-#divHeader.fade {
-	opacity: 0.35;
-	transition: opacity 0.75s;
-}
-
 #tblChapterNo {
 	width: 100%;
 	font-size: 80%;
