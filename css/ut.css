@@ -95,8 +95,20 @@ header {
 
 #btnPrev,
 #btnNext {
-	background-color: #f8f8f8;
 	width: 10%;
+}
+
+#btnPrev svg,
+#btnNext svg {
+	fill: #204060;
+}
+
+#btnPrev {
+	text-align: left;
+}
+
+#btnNext {
+	text-align: right;
 }
 
 #divTitle {
