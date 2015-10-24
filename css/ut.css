@@ -166,7 +166,6 @@ button {
 	text-rendering: auto;
 	width: 50%;
 	margin: -1px; /*hack to prevent wrapping of inline-block elements because of whitespace between tags */
-	overflow-x: auto;
 }
 
 .verseNo {
