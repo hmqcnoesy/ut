@@ -103,12 +103,16 @@ header {
 	text-align: center;
 }
 
-#divHeader a {
-	display: inline-block;
+#btnPrev,
+#btnNext {
+	background-color: #f8f8f8;
+	width: 10%;
 }
 
 #divTitle {
 	display: inline-block;
+	width: 80%;
+	overflow: auto;
 } 
 
 h1, h2 {
