@@ -53,6 +53,26 @@ header {
 	transition: max-height 0.35s;
 }
 
+
+#divTabs input[type=radio] {
+	display: none;
+}
+
+#divTabs input[type=radio]+label {
+	padding: 0 1em;
+	margin: 0 1em;
+	outline: none;
+}
+
+#divTabs input[type=radio]:checked+label {
+	border-bottom: 4px solid #f8f8f8;
+	outline: none;
+}
+
+#divNav div.row {
+	background-color: #f8f8f8;
+}
+
 #divNav select {
 	max-width: 100%;
 }
