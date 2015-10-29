@@ -8,7 +8,8 @@ function getSavedInfo() {
 		lang2: 'eng',
 		book: 'bofm-title',
 		chapterNo: 1,
-		fontSize: '100%'
+		fontSize: '100%',
+		verseLayout: 'side'
 	};
 }
 
@@ -21,6 +22,7 @@ function setSavedInfo(infoToSave) {
 	if (infoToSave.book) savedInfo.book = infoToSave.book;
 	if (infoToSave.chapterNo) savedInfo.chapterNo = infoToSave.chapterNo;
 	if (infoToSave.fontSize) savedInfo.fontSize = infoToSave.fontSize;
+	if (infoToSave.verseLayout) savedInfo.verseLayout = infoToSave.verseLayout;
 	localStorage.savedInfo = JSON.stringify(savedInfo);
 }
 
@@ -271,20 +273,36 @@ function toggleNavVisibility() {
 }
 
 
-function setRowFontSizeStyle() {
-	var savedInfo = getSavedInfo();
-	if (savedInfo.fontSize) {
-		document.getElementById('styleFontSize').innerHTML = '.lang1,.lang2{font-size:' + savedInfo.fontSize + '}';
-		document.getElementById('btnFontSize' + savedInfo.fontSize).checked = true;
+function setVerseLayoutStyle(style) {
+	var styleElement = document.getElementById('styleVerseLayout');
+	if (style == 'side') {
+		styleElement.innerHTML = '.lang1,.lang2{display:inline-block;width:50%;}';
+	} else if (style == 'top') {
+		styleElement.innerHTML = '.lang1,.lang2{display:block;padding-bottom: 1em;}';
+	} else if (style == 'single') {
+		styleElement.innerHTML = '.lang1{display:block} .lang2{display:none}';
 	}
+	document.getElementById('btnVerseLayout' + style).checked = true;
+}
+
+function verseLayoutOptionChanged(e) {
+	if (!e.target.value) return;
+	setSavedInfo({ verseLayout: e.target.value });
+	setVerseLayoutStyle(e.target.value);
+}
+
+
+function setRowFontSizeStyle(fontSize) {
+	if (!fontSize) return;
+	document.getElementById('styleFontSize').innerHTML = '.lang1,.lang2{font-size:' + fontSize + '}';
+	document.getElementById('btnFontSize' + fontSize).checked = true;
 }
 
 
 function fontSizeOptionChanged(e) {
 	if (!e.target.value) return;
 	setSavedInfo({ fontSize: e.target.value });
-	setRowFontSizeStyle();
-	return false;
+	setRowFontSizeStyle(e.target.value);
 }
 
 
@@ -298,6 +316,7 @@ function handleEvents() {
 	document.getElementById('btnShowSettings').addEventListener('change', toggleNavVisibility);
 	document.getElementById('btnShowAbout').addEventListener('change', toggleNavVisibility);
 	document.getElementById('divFontSizes').addEventListener('click', fontSizeOptionChanged);
+	document.getElementById('divVerseLayouts').addEventListener('click', verseLayoutOptionChanged);
 	
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
@@ -314,7 +333,8 @@ function handleEvents() {
 
 
 var savedInfo = getSavedInfo();
-setRowFontSizeStyle();
+setVerseLayoutStyle(savedInfo.verseLayout);
+setRowFontSizeStyle(savedInfo.fontSize);
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 handleEvents();
 setupHamburger();

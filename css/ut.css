@@ -202,13 +202,7 @@ button {
 .lang2 {
 	padding-right: 1em;
 	box-sizing: border-box;
-	display: inline-block;
-	zoom: 1;
-	letter-spacing: normal;
-	word-spacing: normal;
 	vertical-align: top;
-	text-rendering: auto;
-	width: 50%;
 	margin: -1px; /*hack to prevent wrapping of inline-block elements because of whitespace between tags */
 }
 
