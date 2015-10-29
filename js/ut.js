@@ -234,12 +234,12 @@ function updateDisplayedChapterNos() {
 function setupHamburger() {
 	document.getElementById("hamburger").addEventListener('click', function(e) {
 		e.preventDefault();
-		if (this.classList.contains('is-active') === true) {
-			document.getElementById('divNav').classList.remove('is-active');
-			this.classList.remove('is-active');
+		if (this.classList.contains('active') === true) {
+			document.getElementById('divOptions').classList.remove('active');
+			this.classList.remove('active');
 		} else {
-			this.classList.add('is-active');
-			document.getElementById('divNav').classList.add('is-active');
+			this.classList.add('active');
+			document.getElementById('divOptions').classList.add('active');
 		}
 	});
 }

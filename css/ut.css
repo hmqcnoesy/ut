@@ -36,19 +36,19 @@ header {
   transition: transform 0.35s;
 }
 
-#hamburger.is-active {
+#hamburger.active {
   transform: rotate(90deg);
   transition: transform 0.35s;
 }
 
-#divNav {
+#divOptions {
 	text-align: center;
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.35s;
 }
 
-#divNav.is-active {
+#divOptions.active {
 	max-height: 500px;
 	transition: max-height 0.35s;
 }
@@ -69,16 +69,16 @@ header {
 	outline: none;
 }
 
-#divNav div.row {
+#divOptions div.row {
 	background-color: #f8f8f8;
 }
 
-#divNav select {
+#divOptions select {
 	max-width: 100%;
 }
 
-#divNav div, 
-#divNav table {
+#divOptions div, 
+#divOptions table {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
