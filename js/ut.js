@@ -258,22 +258,36 @@ function updateBtnNavigateText() {
 }
 
 
+function toggleNavVisibility() {
+	document.getElementById('divNavTab').classList.add('hidden');
+	document.getElementById('divSettingsTab').classList.add('hidden');
+	document.getElementById('divAboutTab').classList.add('hidden');
+	
+	if (document.getElementById('btnShowNav').checked) document.getElementById('divNavTab').classList.remove('hidden');
+	if (document.getElementById('btnShowSettings').checked) document.getElementById('divSettingsTab').classList.remove('hidden');
+	if (document.getElementById('btnShowAbout').checked) document.getElementById('divAboutTab').classList.remove('hidden');
+}
+
+
 function handleEvents() {
 	document.getElementById('selLang1').addEventListener('change', updateSelectedLanguages);
 	document.getElementById('selLang2').addEventListener('change', updateSelectedLanguages);
 	document.getElementById('selBook').addEventListener('change', updateDisplayedChapterNos);
 	document.getElementById('selBook').addEventListener('change', updateBtnNavigateText);
 	document.getElementById('tblChapterNo').addEventListener('click', updateBtnNavigateText);
+	document.getElementById('btnShowNav').addEventListener('change', toggleNavVisibility);
+	document.getElementById('btnShowSettings').addEventListener('change', toggleNavVisibility);
+	document.getElementById('btnShowAbout').addEventListener('change', toggleNavVisibility);
 	
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
+			if (this.id === 'btnNextBottom') window.scrollTo(0, 0);
 			this.classList.add('active');
 			var savedInfo = getSavedInfo();
 			var book = this.getAttribute('data-book');
 			var no = this.getAttribute('data-no');
 			loadChapter(savedInfo.lang1, savedInfo.lang2, book, no);
-			if (this.id === 'btnNextBottom') window.scrollTo(0, 0);
 		});
 	}
 }
