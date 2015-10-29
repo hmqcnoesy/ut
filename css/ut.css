@@ -54,19 +54,45 @@ header {
 }
 
 
+#divOptions input[type=radio] {
+	display: none;
+}
+
+#divOptions input[type=radio]+label {
+	border: 4px solid transparent;
+	padding: 0.15em;
+	border-radius: 50%;
+	outline: none;
+}
+
+#divOptions input[type=radio]:checked+label {
+	border: 4px solid #204060;
+	outline: none;
+}
+
+
 #divTabs input[type=radio] {
 	display: none;
 }
 
 #divTabs input[type=radio]+label {
+	border:none;
+	border-radius: 0;
 	padding: 0 1em;
 	margin: 0 1em;
 	outline: none;
+	fill: #f8f8f8;
+	stroke-width: 1em;
+	stroke: #204060;
 }
 
 #divTabs input[type=radio]:checked+label {
-	border-bottom: 4px solid #f8f8f8;
+	border:none;
+	border-radius: 0;
 	outline: none;
+	fill: #204060;
+	stroke-width: 1em;
+	stroke: #f8f8f8;
 }
 
 #divOptions div.row {
@@ -92,23 +118,6 @@ header {
 #tblChapterNo td {
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-}
-
-
-#tblChapterNo input[type=radio] {
-	display: none;
-}
-
-#tblChapterNo input[type=radio]+label {
-	border: 4px solid transparent;
-	padding: 0.15em;
-	border-radius: 50%;
-	outline: none;
-}
-
-#tblChapterNo input[type=radio]:checked+label {
-	border: 4px solid #204060;
-	outline: none;
 }
 
 

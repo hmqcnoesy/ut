@@ -7,7 +7,8 @@ function getSavedInfo() {
 		lang1: 'eng',
 		lang2: 'eng',
 		book: 'bofm-title',
-		chapterNo: 1
+		chapterNo: 1,
+		fontSize: '100%'
 	};
 }
 
@@ -19,6 +20,7 @@ function setSavedInfo(infoToSave) {
 	if (infoToSave.lang2) savedInfo.lang2 = infoToSave.lang2;
 	if (infoToSave.book) savedInfo.book = infoToSave.book;
 	if (infoToSave.chapterNo) savedInfo.chapterNo = infoToSave.chapterNo;
+	if (infoToSave.fontSize) savedInfo.fontSize = infoToSave.fontSize;
 	localStorage.savedInfo = JSON.stringify(savedInfo);
 }
 
@@ -269,6 +271,23 @@ function toggleNavVisibility() {
 }
 
 
+function setRowFontSizeStyle() {
+	var savedInfo = getSavedInfo();
+	if (savedInfo.fontSize) {
+		document.getElementById('styleFontSize').innerHTML = '.lang1,.lang2{font-size:' + savedInfo.fontSize + '}';
+		document.getElementById('btnFontSize' + savedInfo.fontSize).checked = true;
+	}
+}
+
+
+function fontSizeOptionChanged(e) {
+	if (!e.target.value) return;
+	setSavedInfo({ fontSize: e.target.value });
+	setRowFontSizeStyle();
+	return false;
+}
+
+
 function handleEvents() {
 	document.getElementById('selLang1').addEventListener('change', updateSelectedLanguages);
 	document.getElementById('selLang2').addEventListener('change', updateSelectedLanguages);
@@ -278,6 +297,7 @@ function handleEvents() {
 	document.getElementById('btnShowNav').addEventListener('change', toggleNavVisibility);
 	document.getElementById('btnShowSettings').addEventListener('change', toggleNavVisibility);
 	document.getElementById('btnShowAbout').addEventListener('change', toggleNavVisibility);
+	document.getElementById('divFontSizes').addEventListener('click', fontSizeOptionChanged);
 	
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
@@ -294,6 +314,7 @@ function handleEvents() {
 
 
 var savedInfo = getSavedInfo();
+setRowFontSizeStyle(savedInfo.fontSize);
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 handleEvents();
 setupHamburger();
