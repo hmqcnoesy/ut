@@ -314,7 +314,7 @@ function handleEvents() {
 
 
 var savedInfo = getSavedInfo();
-setRowFontSizeStyle(savedInfo.fontSize);
+setRowFontSizeStyle();
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
 handleEvents();
 setupHamburger();
