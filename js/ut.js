@@ -275,6 +275,8 @@ function toggleNavVisibility() {
 
 function setVerseLayoutStyle(style) {
 	var styleElement = document.getElementById('styleVerseLayout');
+	if (style != 'side' && style != 'top' && style != 'single') style = 'side';
+	
 	if (style == 'side') {
 		styleElement.innerHTML = '.lang1,.lang2{display:inline-block;width:50%;}';
 	} else if (style == 'top') {
