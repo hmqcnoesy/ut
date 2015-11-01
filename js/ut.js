@@ -3,14 +3,40 @@
 function getSavedInfo() {
 	if (localStorage.savedInfo) return JSON.parse(localStorage.savedInfo);
 	
+	var langs = tryGetLangsFromQueryString();
+	
 	return {
-		lang1: 'eng',
-		lang2: 'eng',
+		lang1: langs.lang1,
+		lang2: langs.lang2,
 		book: 'bofm-title',
 		chapterNo: 1,
 		fontSize: '100%',
 		verseLayout: 'side'
 	};
+}
+
+
+function tryGetLangsFromQueryString() {
+	var langs = { lang1: 'eng', lang2: 'eng' };
+	
+	var qs = window.location.search;
+	var idx = qs.indexOf('lang1=');
+	if (idx >= 0 && qs.length >= idx+9) {
+		var lang1 = qs.substr(idx + 6, 3);
+		if (document.querySelector('#selLang1 option[value=' + lang1 + ']')) {
+			langs.lang1 = lang1;
+		}
+	}
+	
+	idx = qs.indexOf('lang2=');
+	if (idx >= 0 && qs.length >= idx+9) {
+		var lang2 = qs.substr(idx + 6, 3);
+		if (document.querySelector('#selLang2 option[value=' + lang2 + ']')) {
+			langs.lang2 = lang2;
+		}
+	}
+	
+	return langs;
 }
 
 
@@ -323,7 +349,7 @@ function handleEvents() {
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
-			if (this.id === 'btnNextBottom') window.scrollTo(0, 0);
+			if (this.id === 'btnNextBottom') window.scrollTo(window.pageXOffset, 0);
 			this.classList.add('active');
 			var savedInfo = getSavedInfo();
 			var book = this.getAttribute('data-book');
