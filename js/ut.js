@@ -349,7 +349,7 @@ function handleEvents() {
 	var buttons = document.querySelectorAll('button.nav');
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].addEventListener('click', function() {
-			if (this.id === 'btnNextBottom') window.scrollTo(0, 0);
+			if (this.id === 'btnNextBottom') window.scrollTo(window.pageXOffset, 0);
 			this.classList.add('active');
 			var savedInfo = getSavedInfo();
 			var book = this.getAttribute('data-book');
