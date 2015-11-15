@@ -121,15 +121,18 @@ function displayChapter(chapterLang1, chapterLang2) {
 		lang2Div = document.createElement('div');
 		lang2Div.classList.add('lang2');
 		
-		if (!chapterLang1.verses[i].hideNumber) {
+		if (chapterLang1.verses[i].vNo) {
 			lang1VerseNo = document.createElement('span');
 			lang1VerseNo.classList.add('verseNo');
 			lang1VerseNo.appendChild(document.createTextNode(chapterLang1.verses[i].vNo));
+			lang1Div.appendChild(lang1VerseNo);
+		}
+		
+		if (chapterLang2.verses[i] && chapterLang2.verses[i].vNo) {
 			lang2VerseNo = document.createElement('span');
 			lang2VerseNo.classList.add('verseNo');
 			lang2VerseNo.appendChild(document.createTextNode(chapterLang2.verses[i].vNo));
-			lang1Div.appendChild(lang1VerseNo);
-			lang2Div.appendChild(lang2VerseNo);
+			lang2Div.appendChild(lang2VerseNo);			
 		}
 		
 		lang1Text = document.createElement('span');
@@ -142,7 +145,7 @@ function displayChapter(chapterLang1, chapterLang2) {
 		}
 		
 		lang1Div.appendChild(lang1Text);
-		lang2Div.appendChild(lang2Text);
+		if (lang2Text) lang2Div.appendChild(lang2Text);
 		
 		rowDiv.appendChild(lang1Div);
 		rowDiv.appendChild(lang2Div);
