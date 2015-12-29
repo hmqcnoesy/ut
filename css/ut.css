@@ -105,6 +105,7 @@ header {
 
 #divOptions select {
 	max-width: 100%;
+	font-size: 16px;
 }
 
 #divOptions div, 
