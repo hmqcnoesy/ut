@@ -78,7 +78,6 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 			};
 			setSavedInfo(infoToSave);
 			syncSettingsWithSavedInfo(infoToSave);
-			updateBtnNavigateText();
 			updateDisplayedChapterNos();
 			deactivateNavButtons();
 		}
@@ -89,6 +88,7 @@ function loadChapter(lang1, lang2, book, chapterNo) {
 function deactivateNavButtons() {
 	document.getElementById('btnPrev').classList.remove('active');
 	document.getElementById('btnNext').classList.remove('active');	
+    document.querySelector('input[name=no]:checked+label').classList.remove('active');
 }
 
 
@@ -241,8 +241,12 @@ function updateSelectedLanguages() {
 	if (selLang2.value) {
 		setSavedInfo({lang2: selLang2.value});
 	}
-	
-	updateBtnNavigateText();
+}
+
+
+function selBookChanged() {
+    updateDisplayedChapterNos();
+    loadSelectedChapter();
 }
 
 
@@ -278,16 +282,24 @@ function setupHamburger() {
 }
 
 
-function updateBtnNavigateText() {
-	var book = document.querySelector('#selBook option:checked');
-	var chapterNo = document.querySelector('#tblChapterNo input[type=radio]:checked');
-	
-	if (!book || !chapterNo) return;
-	
-	var btn = document.getElementById('btnNavigate');
-	btn.setAttribute('data-book', book.value);
-	btn.setAttribute('data-no', chapterNo.value);
-	btn.innerHTML = book.innerHTML + ' ' + chapterNo.value + ' &gt;&gt;';
+function chapterNumberClicked(evt) {
+    if(evt.target.tagName.toUpperCase() !== 'LABEL') return;
+    evt.target.classList.add('active');
+	var lang1 = document.getElementById('selLang1').value;
+    var lang2 = document.getElementById('selLang2').value;
+    var book = document.getElementById('selBook').value;
+    var chapterNo = document.getElementById(evt.target.getAttribute('for')).value;
+    loadChapter(lang1, lang2, book, chapterNo);
+}
+
+
+function loadSelectedChapter() {
+	var lang1 = document.getElementById('selLang1').value;
+    var lang2 = document.getElementById('selLang2').value;
+    var book = document.getElementById('selBook').value;
+    var chapterNo = document.querySelector('input[name=no]:checked').value;
+    console.log(lang1);
+    loadChapter(lang1, lang2, book, chapterNo);
 }
 
 
@@ -337,12 +349,13 @@ function fontSizeOptionChanged(e) {
 }
 
 
-function handleEvents() {
+function setupEventHandlers() {
 	document.getElementById('selLang1').addEventListener('change', updateSelectedLanguages);
+	document.getElementById('selLang1').addEventListener('change', loadSelectedChapter);
 	document.getElementById('selLang2').addEventListener('change', updateSelectedLanguages);
-	document.getElementById('selBook').addEventListener('change', updateDisplayedChapterNos);
-	document.getElementById('selBook').addEventListener('change', updateBtnNavigateText);
-	document.getElementById('tblChapterNo').addEventListener('click', updateBtnNavigateText);
+	document.getElementById('selLang2').addEventListener('change', loadSelectedChapter);
+	document.getElementById('selBook').addEventListener('change', selBookChanged);
+	document.getElementById('tblChapterNo').addEventListener('click', chapterNumberClicked);
 	document.getElementById('btnShowNav').addEventListener('change', toggleNavVisibility);
 	document.getElementById('btnShowSettings').addEventListener('change', toggleNavVisibility);
 	document.getElementById('btnShowAbout').addEventListener('change', toggleNavVisibility);
@@ -367,9 +380,8 @@ var savedInfo = getSavedInfo();
 setVerseLayoutStyle(savedInfo.verseLayout);
 setRowFontSizeStyle(savedInfo.fontSize);
 loadChapter(savedInfo.lang1, savedInfo.lang2, savedInfo.book, savedInfo.chapterNo);
-handleEvents();
+setupEventHandlers();
 setupHamburger();
 syncSettingsWithSavedInfo(savedInfo);
 updateSelectedLanguages();
 updateDisplayedChapterNos();
-updateBtnNavigateText();

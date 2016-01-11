@@ -74,6 +74,10 @@ header {
 	outline: none;
 }
 
+#divOptions input[type=radio]:checked+label.active {
+	border: 4px solid #bbb;
+}
+
 
 #divTabs input[type=radio] {
 	display: none;
