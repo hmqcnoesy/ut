@@ -300,7 +300,6 @@ function loadSelectedChapter() {
     var lang2 = document.getElementById('selLang2').value;
     var book = document.getElementById('selBook').value;
     var chapterNo = document.querySelector('input[name=no]:checked').value;
-    console.log(lang1);
     loadChapter(lang1, lang2, book, chapterNo);
 }
 

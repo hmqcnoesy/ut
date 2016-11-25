@@ -9,3 +9,4 @@ The `data-books` attribute value can be pulled from `nav.json` using.  I paste
 the contents into a browsers dev tools like `var d = <pasted contents>;` and 
 then `var str = '';  for (var i = 0; i < d.books.length; i++) { str += d.books[i].text + ','; }`
 4. Add an `<option>` for the new language to `select#selLang2` also.
+5. The bomhog repository also can create the `<option>` values using `node generateHtmlSelect`
