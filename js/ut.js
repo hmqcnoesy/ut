@@ -142,6 +142,8 @@ function displayChapter(chapterLang1, chapterLang2) {
 			lang2Text = document.createElement('span');
 			lang2Text.classList.add('verseText');
 			lang2Text.innerHTML = chapterLang2.verses[i].txt;
+		} else {
+			lang2Text = null;
 		}
 		
 		lang1Div.appendChild(lang1Text);
